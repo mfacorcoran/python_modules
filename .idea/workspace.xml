@@ -24,8 +24,8 @@
       <file leaf-file-name="astroupdate.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/astroupdate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5645851">
-              <caret line="85" column="27" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.6578272">
+              <caret line="133" column="102" selection-start-line="133" selection-start-column="102" selection-end-line="133" selection-end-column="102" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -264,15 +264,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/astroupdate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5645851">
-          <caret line="85" column="27" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.6578272">
+          <caret line="133" column="102" selection-start-line="133" selection-start-column="102" selection-end-line="133" selection-end-column="102" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>

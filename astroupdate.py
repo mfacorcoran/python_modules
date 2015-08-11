@@ -76,14 +76,14 @@ def auto_update(software):
     :return:
     """
     ad = astroupdate_dict()
+    software = software.strip().lower()
     try:
-        #current_vers, moddate, resp, updateurl = astroupdate(software.strip().lower())
-        current_vers = ad[software.strip().lower()]['Version']
+        current_vers = ad[software]['Version']
     except:
         print "{0} not found in Astro-Update Database; returning".format(software)
         return
-
-    if software=="HEASoft":
+    updateurl = ad[software]["URL"]
+    if software=="heasoft":
         headasdir = os.getenv('HEADAS')
         if not headasdir:
             print "Environment variable $HEADAS is not defined; stopping"
@@ -104,7 +104,7 @@ def auto_update(software):
                 #webbrowser.open('http://heasarc.gsfc.nasa.gov/docs/software/lheasoft/download.html')
                 webbrowser.open(updateurl)
 
-    if software=='SAE':
+    if software=='sae':
         fermidir=os.getenv('FERMI_DIR')
         if not fermidir:
             print "Environment variable $FERMI_DIR is not defined; stopping"
@@ -114,15 +114,47 @@ def auto_update(software):
         if not STools:
             print "Problem finding {0}".format(fermidir+'/../..')
             return
-        SToolsver=STools[0].split('Tools-')[1].split('-fssc')[0]
+        vers=STools[0].split('Tools-')[1].split('-fssc')[0].strip()
         #print SToolsver
-        print "The current version of the Science Analysis Environment for Fermi is {0}; you have version {1}".format(current_vers.strip(), SToolsver.strip())
-        if current_vers<>SToolsver:
-            ans=''
+        print "The current version of the Science Analysis Environment for Fermi is {0}; you have version {1}".format(current_vers.strip(), vers.strip())
+        if current_vers<>vers:
             ans=raw_input("Would you like to update (Y/n)? ")
             if ans.strip()=='' or ans[0].lower()=='y':
                 print "Opening Fermi SAE download page in your web browser"
                 #webbrowser.open('http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/')
                 webbrowser.open(updateurl)
+
+    if software =='xspec':
+        headasdir = os.getenv('HEADAS')
+        if not headasdir:
+            print "Environment variable $HEADAS is not defined; stopping"
+            return
+        """
+        Get installed primary version number from locally installed manual.html; this is defined as a constant in
+        the file $HEADAS/../Xspec/src/XSUtil/Utils/XSutility.cxx in a line like this: static const string version = "12.9.0b";
+        """
+        xsutil=headasdir+'/../Xspec/src/XSUtil/Utils/XSutility.cxx'
+        f=open(xsutil,'r')
+        for line in f.readlines():
+            #print line
+            if 'version =' in line:
+                print line
+                vers = line.split('=')[1].strip().split('"')[1]
+                print 'Vers = {0}'.format(vers.strip())
+                foundversion=True
+                break
+        f.close()
+        if not foundversion:
+            print "Could not find local XSpec version; stopping"
+            return
+        print "The current version of XSpec is {0}; you have version {1}".format(current_vers.strip(), vers.strip())
+        if current_vers<>vers:
+            ans=raw_input("Would you like to update (Y/n)? ")
+            if ans.strip()=='' or ans[0].lower()=='y':
+                print "Opening the XSpec download page in your web browser"
+                #webbrowser.open('http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/')
+                webbrowser.open(updateurl)
+
     return
+
 
