@@ -6,24 +6,12 @@ import glob
 import webbrowser
 
 
-def astroupdate_dict2(url="http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update/"):
-    response = urllib2.urlopen('http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update/')
-    html=response.read()
-    soup=BeautifulSoup(''.join(html))
-    table=soup.findAll('table')
-    soft_table=table[1] # there are 3 tables on the page, the software version table is the 2nd table
-    rows = soft_table.findAll('tr')
-    au_dict=dict()
-    for row in rows[1:]:
-        cols = row.findAll('td')
-        n   =''.join(cols[0].find(text=True))
-        r   =''.join(cols[1].find(text=True))
-        v   =''.join(cols[2].find(text=True))
-        m   =''.join(cols[3].find(text=True))
-        au_dict[n]=(v,m,r)
-    return au_dict
-
 def astroupdate_dict(url="http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update/"):
+    """
+    Creates a python dictionary based on the software version table in astro-update
+    :param url:
+    :return:
+    """
     response = urllib2.urlopen('http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update/')
     html=response.read()
     soup=BeautifulSoup(''.join(html))
@@ -44,6 +32,15 @@ def astroupdate_dict(url="http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update
 
 
 def astroupdate(software, chatter=0):
+    """
+    If a specified software package is monitored in astro-update,
+    this will returen the current version, date of last update, the
+    software author, and the url to download the latest update
+
+    :param software: name of software package to check
+    :param chatter: verbosity
+    :return:
+    """
     aud=astroupdate_dict()
     softkey=software.strip().lower()
     try:
@@ -65,8 +62,15 @@ def astroupdate(software, chatter=0):
 
 
 def auto_update(software):
-    current_vers, moddate, resp, updateurl = astroupdate(software.strip().lower())
+    """
+    for the specified software, notify the user if their installed version is up-to-date; if not
+    give the user the option of downloading the latest version (by taking the user to the
+    software download page in their web browser
 
+    :param software: name of software to check
+    :return:
+    """
+    current_vers, moddate, resp, updateurl = astroupdate(software.strip().lower())
     if software=="HEASoft":
         fver_installed = subprocess.check_output(['fversion'])
         vers=fver_installed.strip("\n").split('_V')
