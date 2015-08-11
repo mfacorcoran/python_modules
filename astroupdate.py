@@ -72,7 +72,11 @@ def auto_update(software):
     """
     current_vers, moddate, resp, updateurl = astroupdate(software.strip().lower())
     if software=="HEASoft":
-        fver_installed = subprocess.check_output(['fversion'])
+        try:
+            fver_installed = subprocess.check_output(['fversion'])
+        except:
+            print "fversion failed; is HEASoft installed?"
+            return
         vers=fver_installed.strip("\n").split('_V')
         vers=vers[1].rstrip()
         print "Latest version of  HEASoft = %s; You currently have HEASoft version %s" % (current_vers, vers)
