@@ -45,33 +45,49 @@ def astroupdate(software, chatter=0):
     softkey=software.strip().lower()
     try:
         aud[softkey]
-        if chatter > 0:
-            print "{0} was last updated to version {1} on {2} by {3}".format(software,
-                                                                         aud[software]['Version'],
-                                                                         aud[software]['Date'],
-                                                                         aud[software]['Author'])
-        ver = str(aud[softkey]['Version'])
-        date = str(aud[softkey]['Date'])
-        author = str(aud[softkey]['Author'])
-        updateurl = str(aud[softkey]['URL'])
-        return ver, date, author, updateurl
     except KeyError:
         print "%s not monitored by Astro-Update" % software
         print "Valid entries are:"
         print aud.keys()
+        return 0
+    if chatter > 0:
+        print "{0} was last updated to version {1} on {2} by {3}".format(software,
+                                                                     aud[software]['Version'],
+                                                                     aud[software]['Date'],
+                                                                     aud[software]['Author'])
+    """
+    ver = str(aud[softkey]['Version'])
+    date = str(aud[softkey]['Date'])
+    author = str(aud[softkey]['Author'])
+    updateurl = str(aud[softkey]['URL'])
+    return ver, date, author, updateurl
+    """
+    return aud[softkey]
+
 
 
 def auto_update(software):
     """
-    for the specified software, notify the user if their installed version is up-to-date; if not
+    for the specified software, notify the user if their installed version is up-to-date; if not,
     give the user the option of downloading the latest version (by taking the user to the
-    software download page in their web browser
+    software download page in their web browser)
 
     :param software: name of software to check
     :return:
     """
-    current_vers, moddate, resp, updateurl = astroupdate(software.strip().lower())
+    ad = astroupdate_dict()
+    try:
+        #current_vers, moddate, resp, updateurl = astroupdate(software.strip().lower())
+        current_vers = ad[software.strip().lower()]['Version']
+    except:
+        print "{0} not found in Astro-Update Database; returning".format(software)
+        return
+
     if software=="HEASoft":
+        headasdir = os.getenv('HEADAS')
+        if not headasdir:
+            print "Environment variable $HEADAS is not defined; stopping"
+            return
         try:
             fver_installed = subprocess.check_output(['fversion'])
         except:
