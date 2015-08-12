@@ -138,9 +138,9 @@ def auto_update(software):
         for line in f.readlines():
             #print line
             if 'version =' in line:
-                print line
+                #print line
                 vers = line.split('=')[1].strip().split('"')[1]
-                print 'Vers = {0}'.format(vers.strip())
+                #print 'Vers = {0}'.format(vers.strip())
                 foundversion=True
                 break
         f.close()
