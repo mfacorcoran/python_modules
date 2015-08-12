@@ -28,9 +28,23 @@
       <file leaf-file-name="astroupdate.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/astroupdate.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state vertical-scroll-proportion="0.7132867">
               <caret line="159" column="5" selection-start-line="159" selection-start-column="5" selection-end-line="159" selection-end-column="5" />
               <folding />
+=======
+<<<<<<< HEAD
+            <state vertical-scroll-proportion="0.44816053">
+              <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+=======
+            <state vertical-scroll-proportion="0.7132867">
+              <caret line="159" column="5" selection-start-line="159" selection-start-column="5" selection-end-line="159" selection-end-column="5" />
+              <folding />
+>>>>>>> origin/master
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -105,8 +119,17 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+<<<<<<< Updated upstream
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+=======
+<<<<<<< HEAD
+    <property name="SearchEverywhereHistoryKey" value="astroup&#9;FILE&#9;file:///Users/mcorcora/GitHub/python_modules/astroupdate.py" />
+=======
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+>>>>>>> origin/master
+>>>>>>> Stashed changes
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -233,6 +256,9 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2493ea37-4f2d-401e-aad2-94e4723d15a3" name="Default" comment="" />
@@ -278,6 +304,16 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/astroupdate.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.44816053">
+          <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+=======
+>>>>>>> Stashed changes
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
@@ -297,6 +333,10 @@
         <state vertical-scroll-proportion="0.7132867">
           <caret line="159" column="5" selection-start-line="159" selection-start-column="5" selection-end-line="159" selection-end-column="5" />
           <folding />
+<<<<<<< Updated upstream
+=======
+>>>>>>> origin/master
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
