@@ -83,10 +83,15 @@ def auto_update(software):
         print "{0} not found in Astro-Update Database; returning".format(software)
         return
     updateurl = ad[software]["URL"]
+
+    """
+    Compare installed version of software to most recent version
+    """
+
     if software=="heasoft":
         headasdir = os.getenv('HEADAS')
         if not headasdir:
-            print "Environment variable $HEADAS is not defined; stopping"
+            print "HEASoft not configured (environment variable $HEADAS is not defined); stopping"
             return
         try:
             fver_installed = subprocess.check_output(['fversion'])
@@ -105,19 +110,20 @@ def auto_update(software):
                 webbrowser.open(updateurl)
 
     if software=='sae':
-        fermidir=os.getenv('FERMI_DIR')
+        fermidir = os.getenv('FERMI_DIR')
         if not fermidir:
-            print "Environment variable $FERMI_DIR is not defined; stopping"
+            print "SAE not configured (environment variable $FERMI_DIR is not defined); stopping"
             return
-        STools= glob.glob(fermidir+'/../../ScienceTools*') # Find Science Tools directory
+        STools = glob.glob(fermidir+'/../../ScienceTools*') # Find Science Tools directory
         #print STools
+        foundversion = False
         if not STools:
-            print "Problem finding {0}".format(fermidir+'/../..')
+            print "Problem finding {0}; Is SAE installed?".format(fermidir+'/../..')
             return
-        vers=STools[0].split('Tools-')[1].split('-fssc')[0].strip()
+        vers = STools[0].split('Tools-')[1].split('-fssc')[0].strip()
         #print SToolsver
         print "The current version of the Science Analysis Environment for Fermi is {0}; you have version {1}".format(current_vers.strip(), vers.strip())
-        if current_vers<>vers:
+        if current_vers.strip()<>vers.strip():
             ans=raw_input("Would you like to update (Y/n)? ")
             if ans.strip()=='' or ans[0].lower()=='y':
                 print "Opening Fermi SAE download page in your web browser"
@@ -126,8 +132,9 @@ def auto_update(software):
 
     if software =='xspec':
         headasdir = os.getenv('HEADAS')
+        foundversion = False
         if not headasdir:
-            print "Environment variable $HEADAS is not defined; stopping"
+            print "XSPEC not configured (environment variable $HEADAS is not defined); stopping"
             return
         """
         Get installed primary version number from locally installed manual.html; this is defined as a constant in
@@ -148,7 +155,7 @@ def auto_update(software):
             print "Could not find local XSpec version; stopping"
             return
         print "The current version of XSpec is {0}; you have version {1}".format(current_vers.strip(), vers.strip())
-        if current_vers<>vers:
+        if current_vers.strip()<>vers.strip():
             ans=raw_input("Would you like to update (Y/n)? ")
             if ans.strip()=='' or ans[0].lower()=='y':
                 print "Opening the XSpec download page in your web browser"
@@ -158,9 +165,24 @@ def auto_update(software):
     if software == 'ciao':
         ascds = os.getenv('ASCDS_INSTALL')
         if not ascds:
-            print "Environment variable $ASCDS_INSTALL is not defined; stopping"
+            print "CIAO not configured (environment variable $ASCDS_INSTALL is not defined); stopping"
             return
         os.system(ascds+'/contrib/bin/check_ciao_version')
+
+
+    if software == 'sas':
+        sasdir = os.getenv('SAS_DIR')
+        if not sasdir:
+            print "SAS not configured (environment variable $SAS_DIR is not defined); stopping"
+            return
+        vers = sasdir.split('sas_')[1].split('/')[0]
+        print "The current version of SAS is {0}; you have version {1}".format(current_vers.strip(), vers.strip())
+        if current_vers.strip() <> vers.strip():
+            ans = raw_input("Would you like to update (Y/n)? ")
+            if ans.strip() == '' or ans[0].lower() == 'y':
+                print "Opening SAS download page in your web browser"
+                # webbrowser.open('http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/')
+                webbrowser.open(updateurl)
 
     return
 
