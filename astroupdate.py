@@ -155,6 +155,13 @@ def auto_update(software):
                 #webbrowser.open('http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/')
                 webbrowser.open(updateurl)
 
+    if software == 'ciao':
+        ascds = os.getenv('ASCDS_INSTALL')
+        if not ascds:
+            print "Environment variable $ASCDS_INSTALL is not defined; stopping"
+            return
+        os.system(ascds+'/contrib/bin/check_ciao_version')
+
     return
 
 
