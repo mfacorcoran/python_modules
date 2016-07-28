@@ -14,7 +14,7 @@ def astroupdate_dict(url="http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update
     """
     response = urllib2.urlopen('http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update/')
     html=response.read()
-    soup=BeautifulSoup(''.join(html))
+    soup=BeautifulSoup(''.join(html), "lxml")
     table=soup.findAll('table')
     soft_table=table[1] # there are 3 tables on the page, the software version table is the 2nd table
     rows = soft_table.findAll('tr')
@@ -22,19 +22,26 @@ def astroupdate_dict(url="http://heasarc.gsfc.nasa.gov/docs/heasarc/astro-update
     for row in rows[1:]:
         cols = row.findAll('td')
         n   =''.join(cols[0].find(text=True))
+        c   = cols[0]
+        try:
+            d   = str(c.contents[1]) # description
+        except IndexError:
+            d = 'Description not found'
+            print n
+        d = d.strip(':').strip()
         r   =''.join(cols[1].find(text=True))
         v   =''.join(cols[2].find(text=True))
         uurl=cols[2].find("a") # get the url pointing to the software download page
         u   =''.join(uurl.attrs['href'])
         m   =''.join(cols[3].find(text=True))
-        au_dict[str(n).lower().strip()]={'Version':str(v),'Date':str(m),'Author':str(r), 'URL': str(u)}
+        au_dict[str(n).lower().strip()]={'Version':str(v),'Date':str(m),'Author':str(r), 'URL': str(u), 'Description':d}
     return au_dict
 
 
 def astroupdate(software, chatter=0):
     """
     If a specified software package is monitored in astro-update,
-    this will returen the current version, date of last update, the
+    this will return the current version, date of last update, the
     software author, and the url to download the latest update
 
     :param software: name of software package to check
@@ -186,4 +193,8 @@ def auto_update(software):
 
     return
 
+if __name__ == '__main__':
+    ad = astroupdate_dict()
+    for k in ad.keys():
+        print k, ad[k]['Description']
 
